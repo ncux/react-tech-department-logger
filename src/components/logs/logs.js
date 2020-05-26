@@ -28,7 +28,10 @@ export const Logs = props => {
         }
     };
 
-    const renderLogs = () => (<h1>Hi</h1>);
+    const showLogs = (
+        !loading && logs.length === 0 ? (<p className="center">No logs</p>)
+            : logs.map(log => (<Log log={ log } key={log.id} />))
+    );
 
     if(loading) return (<Loading />);
 
@@ -37,10 +40,7 @@ export const Logs = props => {
             <li className="collection-header">
                 <h4 className="center">System Logs</h4>
             </li>
-            { !loading && logs.length === 0 ? (<p className="center">No logs</p>)
-                : logs.map(log => (<Log log={ log } key={log.id} />))
-            }
-
+            { showLogs }
         </ul>
     );
 
