@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './addLogModal.module.css';
+import classes from './addLogModal.module.css';
 import M from 'materialize-css/dist/js/materialize.min';
 import axios from 'axios';
 
@@ -23,9 +23,9 @@ export const AddLogModal = props => {
     };
 
     return (
-        <div id="add-log-modal" className={`modal ${styles.modalStyle}`}>
+        <div id="add-log-modal" className={`modal ${classes.modalStyle}`}>
             <div className="modal-content">
-                <h4>Enter System Log</h4>
+                <h4>Add System Log</h4>
                 <div className="row">
                     <div className="input-field">
                         <input type="text" name="message" value={ message }  onChange={ e => setMessage(e.target.value) } />

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css/dist/js/materialize.min';
 import './App.css';
+import { Provider } from "./context";
 import { SearchBar } from "./components/search-bar/search-bar";
 import { Logs } from "./components/logs/logs";
 import { AddButton } from "./components/addButton/addButton";
@@ -18,19 +19,19 @@ function App() {
   }, []);
 
   return (
-    <>
-      <SearchBar />
-      <div className="container">
-
-          <AddButton />
-          <AddLogModal />
-          <EditLogModal />
-          <AddTechModal />
-          <TechListModal />
-          <Logs />
-
-      </div>
-    </>
+      <Provider>
+            <>
+              <SearchBar />
+              <div className="container">
+                  <AddButton />
+                  <AddLogModal />
+                  <EditLogModal />
+                  <AddTechModal />
+                  <TechListModal />
+                  <Logs />
+              </div>
+            </>
+      </Provider>
   );
 
 }

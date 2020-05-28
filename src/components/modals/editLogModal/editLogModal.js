@@ -25,7 +25,7 @@ export const EditLogModal = props => {
     return (
         <div id="edit-log-modal" className={`modal ${styles.modalStyle}`}>
             <div className="modal-content">
-                <h4 className="text-accent-2">Enter System Log</h4>
+                <h4 className="text-accent-2">Edit System Log</h4>
                 <div className="row">
                     <div className="input-field">
                         <input type="text" name="message" value={ message }  onChange={ e => setMessage(e.target.value) } />

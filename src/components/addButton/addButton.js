@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from "../../context";
 
 
 export const AddButton = props => {
+
+    const { setModalIsOpen } = useContext(Context);
 
     return (
         <div className="fixed-action-btn">
@@ -11,7 +14,7 @@ export const AddButton = props => {
 
             <ul>
                 <li>
-                    <a href="#tech-list-modal" className="btn-floating green modal-trigger">
+                    <a onClick={() => setModalIsOpen(true)} className="btn-floating green">
                         <i className="material-icons">person</i>
                     </a>
                 </li>
