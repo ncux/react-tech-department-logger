@@ -1,12 +1,12 @@
 import React from 'react';
 import Moment from "react-moment";
+import { connect } from 'react-redux';
 import styles from './log.module.css';
+import { deleteLogAction } from "../../../state/actions/logsActions";
 
-export const Log = ({ log }) => {
+const Log = ({ log, deleteLogAction }) => {
 
     const { id, message, urgent, technician, date } = log;
-
-    console.log(date);
 
     return (
         <li className="collection-item">
@@ -22,7 +22,7 @@ export const Log = ({ log }) => {
                        Technician: <span className="blue-text">{ technician }</span>
                    </p>
                </div>
-                <a href="#" className="secondary-content">
+                <a href="#" onClick={ () => deleteLogAction(id) } className="secondary-content">
                     <i className="material-icons grey-text">delete</i>
                 </a>
             </div>
@@ -30,4 +30,6 @@ export const Log = ({ log }) => {
     );
 
 };
+
+export default connect(null, { deleteLogAction })(Log);
 

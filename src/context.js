@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react';
 
 export const Context = createContext();
 
-export const Provider = props => {
+export const ModalProvider = props => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import classes from './addLogModal.module.css';
 import M from 'materialize-css/dist/js/materialize.min';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import classes from './addLogModal.module.css';
+import { addLogAction } from "../../../state/actions/logsActions";
 
-const SERVER_URL = `/logs`;
-
-export const AddLogModal = props => {
+const AddLogModal = ({ addLogAction }) => {
 
     const [message, setMessage] = useState('');
     const [urgent, setUrgent] = useState(false);
@@ -16,7 +15,8 @@ export const AddLogModal = props => {
         if(message == '' || technician == '') {
             M.toast({ html: 'Log message and technician name are both required' });
         }
-        console.log(message, urgent, technician);
+        addLogAction({ message, urgent, technician, date: new Date() });
+        M.toast({ html: `New log added by ${technician}` });
         setMessage('');
         setUrgent(false);
         setTechnician('');
@@ -62,4 +62,6 @@ export const AddLogModal = props => {
     );
 
 };
+
+export default connect(null, { addLogAction })(AddLogModal);
 

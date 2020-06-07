@@ -1,39 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import Loading from "../loading/loading";
-import { Log } from "./log/log";
+import Log from "./log/log";
+import { getLogsAction } from "../../state/actions/logsActions";
 
-const SERVER_URL = `/logs`;
-
-export const Logs = props => {
-
-    const [loading, setLoading] = useState(false);
-    const [logs, setLogs] = useState([]);
+const Logs = ({ logs: { logsArray, loading }, getLogsAction }) => {
 
     // get all logs
     useEffect(() => {
-        getLogs();
+        getLogsAction();
         // eslint-disable-next-line
     }, []);
 
-    const getLogs = async () => {
-        try {
-            setLoading(true);
-            const { data } = await axios.get(SERVER_URL);
-            console.log(data);
-            setLogs(data);
-            setLoading(false);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     const showLogs = (
-        !loading && logs.length === 0 ? (<p className="center">No logs</p>)
-            : logs.map(log => (<Log log={ log } key={log.id} />))
+        !loading && logsArray.length === 0 ? (<p className="center">No logs</p>)
+            : logsArray.map(log => (<Log log={ log } key={log.id} />))
     );
 
-    if(loading) return (<Loading />);
+    if(loading || !logsArray.length) return (<Loading />);
 
     return (
         <ul className="collection with-header">
@@ -45,4 +29,10 @@ export const Logs = props => {
     );
 
 };
+
+const mapStateToProps = state => ({
+    logs: state.logs
+});
+
+export default connect(mapStateToProps, { getLogsAction })(Logs);
 
