@@ -1,5 +1,15 @@
-import {ADD_LOG, DELETE_LOG, GET_LOGS, LOGS_ERROR, SET_LOADING} from "../actions/types";
+import {
+    ADD_LOG,
+    CLEAR_CURRENT,
+    DELETE_LOG,
+    GET_LOGS,
+    LOGS_ERROR,
+    SET_CURRENT,
+    SET_LOADING,
+    UPDATE_LOG
+} from "../actions/types";
 
+// initialState = logs in the combinedReducer
 const initialState = {
     logsArray: [],
     current: null,
@@ -30,11 +40,29 @@ export default (state=initialState, action) => {
                 loading: false
             };
 
-        case DELETE_LOG:
-            const logsArray = state.logsArray.filter(log => log.id !== action.payload);
+        case SET_CURRENT:
             return {
                 ...state,
-                logsArray,
+                current: action.payload
+            };
+
+        case CLEAR_CURRENT:
+            return {
+                ...state,
+                current: null
+            };
+
+        case UPDATE_LOG:
+            return {
+                ...state,
+                logsArray: state.logsArray.map(log => log.id === action.payload.id ? action.payload : log),
+                loading: false
+            };
+
+        case DELETE_LOG:
+            return {
+                ...state,
+                logsArray: state.logsArray.filter(log => log.id !== action.payload),
                 loading: false
             };
 

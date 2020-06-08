@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
-import styles from './editLogModal.module.css';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import M from 'materialize-css/dist/js/materialize.min';
-import axios from 'axios';
+import styles from './editLogModal.module.css';
+import { updateLogAction } from "../../../state/actions/logsActions";
 
-const SERVER_URL = `/logs`;
-
-export const EditLogModal = props => {
+const EditLogModal = ({ current, updateLogAction }) => {
 
     const [message, setMessage] = useState('');
     const [urgent, setUrgent] = useState(false);
     const [technician, setTechnician] = useState('');
+
+    useEffect(() => {
+        if(current) {
+            const { message, urgent, technician } = current;
+            setMessage(message);
+            setUrgent(urgent);
+            setTechnician(technician);
+        }
+    }, [current]);
 
     const onSubmit = e => {
         e.preventDefault();
         if(message == '' || technician == '') {
             M.toast({ html: 'Log message and technician name are both required' });
         }
-        console.log(message, urgent, technician);
+        updateLogAction({ id: current.id, message, urgent, technician, date: new Date() });
+        M.toast({ html: 'Log successfully updated!' });
         setMessage('');
         setUrgent(false);
         setTechnician('');
@@ -28,8 +37,11 @@ export const EditLogModal = props => {
                 <h4 className="text-accent-2">Edit System Log</h4>
                 <div className="row">
                     <div className="input-field">
-                        <input type="text" name="message" value={ message }  onChange={ e => setMessage(e.target.value) } />
-                        <label htmlFor="message" className="active">Log message</label>
+                        <input type="text" name="message"
+                               value={ message }
+                               onChange={ e => setMessage(e.target.value) }
+                               placeholder="Log message"
+                        />
                     </div>
                 </div>
                 <div className="row">
@@ -60,6 +72,11 @@ export const EditLogModal = props => {
             </div>
         </div>
     );
-
 };
+
+const mapStateToProps = state => ({
+    current: state.logs.current
+});
+
+export default connect(mapStateToProps, { updateLogAction })(EditLogModal);
 

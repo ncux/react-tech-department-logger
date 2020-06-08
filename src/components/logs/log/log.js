@@ -2,9 +2,9 @@ import React from 'react';
 import Moment from "react-moment";
 import { connect } from 'react-redux';
 import styles from './log.module.css';
-import { deleteLogAction } from "../../../state/actions/logsActions";
+import { deleteLogAction, setCurrentAction } from "../../../state/actions/logsActions";
 
-const Log = ({ log, deleteLogAction }) => {
+const Log = ({ log, deleteLogAction, setCurrentAction }) => {
 
     const { id, message, urgent, technician, date } = log;
 
@@ -15,8 +15,9 @@ const Log = ({ log, deleteLogAction }) => {
                    <small className="grey-text">
                        <Moment format="YYYY MMMM Do, HH:mm">{ date }</Moment>
                    </small> <br />
-                   <a href="#edit-log-modal" className={`modal-trigger ${urgent ? 'red-text' : 'blue-text'}`}>
-                       <span className="black-text">Message: </span> { id } <span className="black-text">|</span> { message }
+                   <a href="#edit-log-modal" onClick={ () => setCurrentAction(log) } className={`modal-trigger ${urgent ? 'red-text' : 'blue-text'}`}>
+                       <span className="black-text">Message: </span> { id } <span className="black-text">| </span>
+                       { message }
                    </a>
                    <p className="black-text">
                        Technician: <span className="blue-text">{ technician }</span>
@@ -31,5 +32,5 @@ const Log = ({ log, deleteLogAction }) => {
 
 };
 
-export default connect(null, { deleteLogAction })(Log);
+export default connect(null, { deleteLogAction, setCurrentAction })(Log);
 
