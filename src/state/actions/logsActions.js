@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setLoading } from './loading';
-import {GET_LOGS, LOGS_ERROR, ADD_LOG, DELETE_LOG} from "./types";
+import {GET_LOGS, LOGS_ERROR, ADD_LOG, DELETE_LOG, SET_CURRENT, CLEAR_CURRENT, UPDATE_LOG} from "./types";
 import { httpHeaders } from "../../config/axios";
 
 const SERVER_URL = `/logs`;
@@ -27,6 +27,30 @@ export const addLogAction = log => {
             setLoading();
             const { data } = await axios.post(SERVER_URL, JSON.stringify(log), httpHeaders);
             return dispatch({ type: ADD_LOG, payload: data });
+        } catch (e) {
+            console.log(e);
+            return dispatch({ type: LOGS_ERROR, payload: e.response.data });
+        }
+    }
+};
+
+// to populate the update log form
+export const setCurrentAction = log => {
+    return dispatch => dispatch({ type: SET_CURRENT, payload: log });
+};
+
+// clear the update log form
+export const clearCurrentAction = () => {
+    return dispatch => dispatch({ type: CLEAR_CURRENT });
+}
+
+export const updateLogAction = log => {
+
+    return async dispatch => {
+        try {
+            setLoading();
+            const { data } = await axios.put(`${SERVER_URL}/${log.id}`, JSON.stringify(log), httpHeaders);
+            return dispatch({ type: UPDATE_LOG, payload: data });
         } catch (e) {
             console.log(e);
             return dispatch({ type: LOGS_ERROR, payload: e.response.data });
