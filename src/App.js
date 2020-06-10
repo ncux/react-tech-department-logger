@@ -5,7 +5,7 @@ import './App.css';
 import { ModalProvider } from "./context";
 import { Provider } from "react-redux";
 import { store } from "./state/store";
-import { SearchBar } from "./components/search-bar/search-bar";
+import SearchBar from "./components/search-bar/search-bar";
 import Logs from "./components/logs/logs";
 import { AddButton } from "./components/addButton/addButton";
 import AddLogModal from "./components/modals/addLogModal/addLogModal";

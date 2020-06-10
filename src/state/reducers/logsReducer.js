@@ -3,7 +3,7 @@ import {
     CLEAR_CURRENT,
     DELETE_LOG,
     GET_LOGS,
-    LOGS_ERROR,
+    LOGS_ERROR, SEARCH_LOGS,
     SET_CURRENT,
     SET_LOADING,
     UPDATE_LOG
@@ -63,6 +63,13 @@ export default (state=initialState, action) => {
             return {
                 ...state,
                 logsArray: state.logsArray.filter(log => log.id !== action.payload),
+                loading: false
+            };
+
+        case SEARCH_LOGS:
+            return {
+                ...state,
+                logsArray: action.payload,
                 loading: false
             };
 

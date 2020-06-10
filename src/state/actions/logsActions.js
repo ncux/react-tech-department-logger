@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setLoading } from './loading';
-import {GET_LOGS, LOGS_ERROR, ADD_LOG, DELETE_LOG, SET_CURRENT, CLEAR_CURRENT, UPDATE_LOG} from "./types";
+import {GET_LOGS, LOGS_ERROR, ADD_LOG, DELETE_LOG, SET_CURRENT, CLEAR_CURRENT, UPDATE_LOG, SEARCH_LOGS} from "./types";
 import { httpHeaders } from "../../config/axios";
 
 const SERVER_URL = `/logs`;
@@ -11,7 +11,6 @@ export const getLogsAction = () => {
         try {
             setLoading();
             const { data } = await axios.get(SERVER_URL);
-            console.log(data);
             return dispatch({ type: GET_LOGS, payload: data });
         } catch (e) {
             console.log(e);
@@ -65,6 +64,21 @@ export const deleteLogAction = id => {
             setLoading();
             await axios.delete(`${SERVER_URL}/${id}`);
             return dispatch({ type: DELETE_LOG, payload: id });
+        } catch (e) {
+            console.log(e);
+            return dispatch({ type: LOGS_ERROR, payload: e.response.data });
+        }
+    }
+};
+
+// filter function for searching logs
+export const searchLogsAction = query => {
+
+    return async dispatch => {
+        try {
+            setLoading();
+            const { data } = await axios.get(`${SERVER_URL}?q=${query}`);
+            return dispatch({ type: SEARCH_LOGS, payload: data });
         } catch (e) {
             console.log(e);
             return dispatch({ type: LOGS_ERROR, payload: e.response.data });
