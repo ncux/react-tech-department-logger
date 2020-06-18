@@ -14,7 +14,7 @@ export const getLogsAction = () => {
             return dispatch({ type: GET_LOGS, payload: data });
         } catch (e) {
             console.log(e);
-            return dispatch({ type: LOGS_ERROR, payload: e.response.data });
+            return dispatch({ type: LOGS_ERROR, payload: e.response.statusText });
         }
     }
 };
@@ -28,7 +28,7 @@ export const addLogAction = log => {
             return dispatch({ type: ADD_LOG, payload: data });
         } catch (e) {
             console.log(e);
-            return dispatch({ type: LOGS_ERROR, payload: e.response.data });
+            return dispatch({ type: LOGS_ERROR, payload: e.response.statusText });
         }
     }
 };
@@ -52,7 +52,7 @@ export const updateLogAction = log => {
             return dispatch({ type: UPDATE_LOG, payload: data });
         } catch (e) {
             console.log(e);
-            return dispatch({ type: LOGS_ERROR, payload: e.response.data });
+            return dispatch({ type: LOGS_ERROR, payload: e.response.statusText });
         }
     }
 };
@@ -66,7 +66,7 @@ export const deleteLogAction = id => {
             return dispatch({ type: DELETE_LOG, payload: id });
         } catch (e) {
             console.log(e);
-            return dispatch({ type: LOGS_ERROR, payload: e.response.data });
+            return dispatch({ type: LOGS_ERROR, payload: e.response.statusText });
         }
     }
 };
@@ -81,7 +81,7 @@ export const searchLogsAction = query => {
             return dispatch({ type: SEARCH_LOGS, payload: data });
         } catch (e) {
             console.log(e);
-            return dispatch({ type: LOGS_ERROR, payload: e.response.data });
+            return dispatch({ type: LOGS_ERROR, payload: e.response.statusText });
         }
     }
 };

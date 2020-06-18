@@ -17,8 +17,8 @@ const initialState = {
     error: null
 };
 
-export default (state=initialState, action) => {
-    switch (action.type) {
+export default (state=initialState, { type, payload }) => {
+    switch (type) {
 
         case SET_LOADING:
             return {
@@ -29,21 +29,21 @@ export default (state=initialState, action) => {
         case ADD_LOG:
             return {
                 ...state,
-                logsArray: [action.payload, ...state.logsArray],
+                logsArray: [payload, ...state.logsArray],
                 loading: false
             };
 
         case GET_LOGS:
             return {
                 ...state,
-                logsArray: action.payload,
+                logsArray: payload,
                 loading: false
             };
 
         case SET_CURRENT:
             return {
                 ...state,
-                current: action.payload
+                current: payload
             };
 
         case CLEAR_CURRENT:
@@ -55,28 +55,28 @@ export default (state=initialState, action) => {
         case UPDATE_LOG:
             return {
                 ...state,
-                logsArray: state.logsArray.map(log => log.id === action.payload.id ? action.payload : log),
+                logsArray: state.logsArray.map(log => log.id === payload.id ? payload : log),
                 loading: false
             };
 
         case DELETE_LOG:
             return {
                 ...state,
-                logsArray: state.logsArray.filter(log => log.id !== action.payload),
+                logsArray: state.logsArray.filter(log => log.id !== payload),
                 loading: false
             };
 
         case SEARCH_LOGS:
             return {
                 ...state,
-                logsArray: action.payload,
+                logsArray: payload,
                 loading: false
             };
 
         case LOGS_ERROR:
             return {
                 ...state,
-                error: action.payload,
+                error: payload,
                 loading: false
             };
 

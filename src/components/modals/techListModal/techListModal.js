@@ -1,45 +1,32 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import classes from './techListModal.module.css';
 import Loading from "../../loading/loading";
 import { Technician } from "./technician/technician";
 import { Context } from "../../../context";
+import { getTechniciansAction } from "../../../state/actions/techniciansActions";
 
 Modal.setAppElement('#root');
 
-const SERVER_URL = `/technicians`;
-
 export const TechListModal = props => {
 
+    const loading = useSelector(state => state.technicians.loading);
+    const techniciansArray = useSelector(state => state.technicians.techniciansArray);
+    const dispatch = useDispatch();
     const { modalIsOpen, setModalIsOpen } = useContext(Context);
-    const [loading, setLoading] = useState(false);
-    const [technicians, setTechnicians] = useState([]);
 
-    // get all logs
     useEffect(() => {
-        getTechnicians();
+        dispatch(getTechniciansAction());
         // eslint-disable-next-line
     }, []);
 
-    const getTechnicians = async () => {
-        try {
-            setLoading(true);
-            const { data } = await axios.get(SERVER_URL);
-            console.log(data);
-            setTechnicians(data);
-            setLoading(false);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     const showTechnicians = (
-        !loading && technicians.length === 0 ? (<p className="center">No technicians</p>)
+        !loading && techniciansArray.length === 0 ? (<p className="center">No technicians</p>)
             : (
                 <ul className="collection">
                     {
-                        technicians.map(tech => (
+                        techniciansArray.map(tech => (
                             <li className="collection-item">
                                 <Technician tech={ tech } key={tech.id} />
                             </li>
