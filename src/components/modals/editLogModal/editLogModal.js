@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import M from 'materialize-css/dist/js/materialize.min';
 import styles from './editLogModal.module.css';
 import { updateLogAction } from "../../../state/actions/logsActions";
+import { TechniciansList } from "../../techniciansList/techniciansList";
 
 const EditLogModal = ({ current, updateLogAction }) => {
 
@@ -48,9 +49,7 @@ const EditLogModal = ({ current, updateLogAction }) => {
                     <div className="input-field">
                         <select name="technician" value={ technician } className="browser-default" onChange={ event => setTechnician(event.target.value) }>
                             <option value="" disabled>Select Technician</option>
-                            <option value="Mary">Mary</option>
-                            <option value="Tom">Tom</option>
-                            <option value="Jack">Jack</option>
+                           <TechniciansList />
                         </select>
                     </div>
                 </div>
