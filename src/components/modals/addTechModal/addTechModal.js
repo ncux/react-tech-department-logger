@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import styles from './addTechModal.module.css';
+import { useDispatch } from "react-redux";
 import M from 'materialize-css/dist/js/materialize.min';
-import axios from 'axios';
-
-const SERVER_URL = `/logs`;
+import styles from './addTechModal.module.css';
+import { addTechnicianAction } from "../../../state/actions/techniciansActions";
 
 export const AddTechModal = props => {
 
     const [techName, setTechName] = useState('');
+    const dispatch = useDispatch();
 
     const onSubmit = e => {
         e.preventDefault();
         if(techName == '') {
             M.toast({ html: "The technician's name is required" });
         }
-        console.log(techName);
+        dispatch(addTechnicianAction({ name: techName }));
         setTechName('');
     };
 

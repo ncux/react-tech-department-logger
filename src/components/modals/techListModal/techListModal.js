@@ -27,8 +27,8 @@ export const TechListModal = props => {
                 <ul className="collection">
                     {
                         techniciansArray.map(tech => (
-                            <li className="collection-item">
-                                <Technician tech={ tech } key={tech.id} />
+                            <li className="collection-item" key={tech.id}>
+                                <Technician technician={ tech } />
                             </li>
                         ))
                     }

@@ -74,6 +74,7 @@ export default (state=initialState, { type, payload }) => {
             };
 
         case LOGS_ERROR:
+            console.error(payload);
             return {
                 ...state,
                 error: payload,

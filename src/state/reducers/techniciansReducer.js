@@ -1,4 +1,10 @@
-import {GET_TECHNICIANS, SET_LOADING, TECHNICIANS_ERROR} from "../actions/types";
+import {
+    ADD_TECHNICIAN,
+    DELETE_TECHNICIAN,
+    GET_TECHNICIANS,
+    SET_LOADING,
+    TECHNICIANS_ERROR
+} from "../actions/types";
 
 const initialState = {
     techniciansArray: [],
@@ -15,6 +21,13 @@ export default (state=initialState, { type, payload }) => {
                 loading: true
             };
 
+        case ADD_TECHNICIAN:
+            return {
+                ...state,
+                techniciansArray: [payload, ...state.techniciansArray],
+                loading: false
+            };
+
         case GET_TECHNICIANS:
             return {
                 ...state,
@@ -22,7 +35,15 @@ export default (state=initialState, { type, payload }) => {
                 loading: false
             };
 
+        case DELETE_TECHNICIAN:
+            return {
+                ...state,
+                techniciansArray: state.techniciansArray.filter(tech => tech.id !== payload),
+                loading: false
+            };
+
         case TECHNICIANS_ERROR:
+            console.error(payload);
             return {
                 ...state,
                 error: payload,
